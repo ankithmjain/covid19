@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-@RequestMapping(value = "/covid19")
+@RequestMapping(value = "/")
 @Api(description = "Covid19 related endpoints")
 public class CoronaController {
 
@@ -62,5 +62,17 @@ public class CoronaController {
         return coronaService.findStatisticsByCountry(country);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "states",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "Find History By Country",
+            notes = "Return History By Country or throws 404")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+    public ResponseEntity<Object> findAllIndianStates() throws IOException, JSONException {
+        return coronaService.findAllIndianState();
+    }
 
 }
