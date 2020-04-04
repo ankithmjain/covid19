@@ -14,7 +14,7 @@ public class CorsConfiguration
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:4200","https://coronastatonline.herokuapp.com","https://www.coronastat.online","http://www.coronastat.online","https://coronastat.online","http://coronastat.online");
+                registry.addMapping("/**").allowedOrigins("http://localhost:4200","https://coronastatonline.herokuapp.com","https://www.coronastat.online","http://www.coronastat.online","https://coronastat.online","http://coronastat.online","gocoronastat.com","http://gocoronastat.com","https://gocoronastat.com","http://www.gocoronastat.com","https://www.gocoronastat.com");
             }
         };
     }
