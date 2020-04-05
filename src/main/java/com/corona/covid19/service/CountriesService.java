@@ -8,6 +8,6 @@ import java.io.IOException;
 public interface CountriesService {
     ResponseEntity<Object> findAllCountriesList() throws IOException, JSONException;
 
-    ResponseEntity<Object> findAllIndianStatesList();
+    ResponseEntity<Object> findAllIndianStatesList() throws IOException, JSONException;
 
 }
