@@ -12,11 +12,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.json.JsonParser;
+import org.springframework.boot.json.JsonParserFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -166,5 +170,29 @@ public class CoronaServiceImpl implements CoronaService {
         return new ResponseEntity<>(stateJson, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<Object> findAllIndianStateByApi() throws IOException, JSONException {
+
+        ArrayList<Object> resultNode = new ArrayList<Object>();
+
+        String url = "https://api.covid19india.org/data.json";
+        RestTemplate restTemplate = new RestTemplate();
+        String resp = restTemplate.getForObject(url, String.class);
+
+        JsonParser springParser = JsonParserFactory.getJsonParser();
+        Map<String, Object> map = springParser.parseMap(resp);
+
+        String mapArray[] = new String[map.size()];
+        System.out.println("Items found: " + mapArray.length);
+
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+
+            if (entry.getKey().equalsIgnoreCase("statewise")) {
+                resultNode = (ArrayList<Object>) entry.getValue();
+            }
+        }
+
+        return new ResponseEntity<>(resultNode, HttpStatus.OK);
+    }
 
 }

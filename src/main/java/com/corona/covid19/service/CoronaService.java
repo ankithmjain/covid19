@@ -13,6 +13,7 @@ public interface CoronaService {
 
     ResponseEntity<Object> findHistoryByCountry(String country) throws IOException, JSONException;
 
-
     ResponseEntity<Object> findAllIndianState() throws IOException, JSONException;
+
+    ResponseEntity<Object> findAllIndianStateByApi() throws IOException, JSONException;
 }
