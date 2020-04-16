@@ -75,4 +75,17 @@ public class CoronaController {
         return coronaService.findAllIndianState();
     }
 
+
+    @RequestMapping(method = RequestMethod.GET, value = "states-api",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "State details from the api",
+            notes = "Return History By Country or throws 404")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+    public ResponseEntity<Object> findAllIndianStateByApi() throws IOException, JSONException {
+        return coronaService.findAllIndianStateByApi();
+    }
 }
