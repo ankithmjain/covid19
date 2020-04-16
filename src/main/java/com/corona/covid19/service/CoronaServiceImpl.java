@@ -195,4 +195,29 @@ public class CoronaServiceImpl implements CoronaService {
         return new ResponseEntity<>(resultNode, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<Object> findAllTimeSeriesDetailsApi() throws IOException, JSONException {
+
+        ArrayList<Object> resultNode = new ArrayList<Object>();
+
+        String url = "https://api.covid19india.org/data.json";
+        RestTemplate restTemplate = new RestTemplate();
+        String resp = restTemplate.getForObject(url, String.class);
+
+        JsonParser springParser = JsonParserFactory.getJsonParser();
+        Map<String, Object> map = springParser.parseMap(resp);
+
+        String mapArray[] = new String[map.size()];
+        System.out.println("Items found: " + mapArray.length);
+
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+
+            if (entry.getKey().equalsIgnoreCase("cases_time_series")) {
+                resultNode = (ArrayList<Object>) entry.getValue();
+            }
+        }
+
+        return new ResponseEntity<>(resultNode, HttpStatus.OK);
+    }
+
 }

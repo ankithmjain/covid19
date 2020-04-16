@@ -88,4 +88,17 @@ public class CoronaController {
     public ResponseEntity<Object> findAllIndianStateByApi() throws IOException, JSONException {
         return coronaService.findAllIndianStateByApi();
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "india-time-series",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "Time Series info",
+            notes = "Returns Time sereies info")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+    public ResponseEntity<Object> findAllTimeSeriesDetailsApi() throws IOException, JSONException {
+        return coronaService.findAllTimeSeriesDetailsApi();
+    }
 }
