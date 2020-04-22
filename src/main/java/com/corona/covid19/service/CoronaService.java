@@ -18,4 +18,6 @@ public interface CoronaService {
     ResponseEntity<Object> findAllIndianStateByApi() throws IOException, JSONException;
 
     ResponseEntity<Object> findAllTimeSeriesDetailsApi() throws IOException, JSONException;
+
+    ResponseEntity<Object> findAllCovidVideos() throws IOException, JSONException;
 }

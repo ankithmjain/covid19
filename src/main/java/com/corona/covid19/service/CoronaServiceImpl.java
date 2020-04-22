@@ -170,6 +170,45 @@ public class CoronaServiceImpl implements CoronaService {
         return new ResponseEntity<>(stateJson, HttpStatus.OK);
     }
 
+
+    public ResponseEntity<Object> findAllCovidVideos() throws IOException, JSONException {
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://sheets.googleapis.com/v4/spreadsheets/1pjeE5fA3pNnAo3XObTmpLP5FXoMCSiSEbibw6S0oK7A/values/URLS?key=AIzaSyCaWYwwu1-BJSXrPvHyYIZBiKP2PqrHqQA")
+                .build();
+
+        logger.info("findAllCovidVideos URL {}",request.url());
+
+        Response response = client.newCall(request).execute();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JSONObject jsonCell = new JSONObject(response.body().string());
+        JsonNode rootNode = objectMapper.readTree(String.valueOf(jsonCell));
+        JsonNode responseNode = rootNode.path("values");
+
+        ArrayNode arrayNode = (ArrayNode) rootNode.get("values");
+
+        List<Map<String, String>> listOfVideos = new ArrayList<Map<String, String>>();
+
+        Map<String, String> individualVideoMapping = null;
+
+
+        for (int i = 1; i < arrayNode.size(); i++) {
+            individualVideoMapping = new LinkedHashMap<>();
+            ArrayNode valuesArray = (ArrayNode) arrayNode.get(i);
+            individualVideoMapping.put("Title", valuesArray.get(0).textValue());
+            individualVideoMapping.put("Url", valuesArray.get(1).textValue());
+            listOfVideos.add(individualVideoMapping);
+        }
+
+
+        String videoJson = new Gson().toJson(listOfVideos);
+        return new ResponseEntity<>(videoJson, HttpStatus.OK);
+
+    }
+
+
     @Override
     public ResponseEntity<Object> findAllIndianStateByApi() throws IOException, JSONException {
 

@@ -76,6 +76,23 @@ public class CoronaController {
     }
 
 
+
+    @RequestMapping(method = RequestMethod.GET, value = "videos",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "Find Covid videos",
+            notes = "Return Covid videos or throws 404")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+    public ResponseEntity<Object> findAllCovidVideos() throws IOException, JSONException {
+
+        return coronaService.findAllCovidVideos();
+
+    }
+
+
     @RequestMapping(method = RequestMethod.GET, value = "states-api",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "State details from the api",
